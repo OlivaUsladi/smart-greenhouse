@@ -1,0 +1,24 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  main:
+    banner-mode: off
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${GH_PORT:8080}
+
+greenhouse:
+  source-file: test-data/packets.log   # журнал тестовых пакетов платы
+  speed: 10                            # ускорение воспроизведения журнала, 0 - без пауз
+  window-sec: 10                       # окно дискретизации, с
+  buffer-size: 60                      # ёмкость кольцевого буфера, пакетов
+  ema-n: 5                             # число периодов N, alpha = 2 / (N + 1)
+  soil-dry-raw: 520                    # АЦП датчика почвы в сухой почве
+  soil-wet-raw: 260                    # АЦП датчика почвы в воде
+  light-inverted: true                 # на свету значение АЦП фоторезистора меньше
+  output-dir: results                  # таблица и графики
+  user: ${GH_USER:admin}
+  password: ${GH_PASSWORD:}
