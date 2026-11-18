@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'ru.greenhouse'
+version = '0.2'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.knowm.xchart:xchart:3.8.8'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('bootRun') {
+    jvmArgs = ['-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8']
+}
+
+bootJar {
+    archiveFileName = 'greenhouse-server.jar'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'failed'
+    }
+}
